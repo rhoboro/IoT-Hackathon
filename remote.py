@@ -91,7 +91,9 @@ def set_temperature(temperature):
 
 # UV
 def get_current_uv_value():
-    pass
+    raw_uv = uvin.read()
+    uv = raw_uv * 4980 # Unit is mV
+    return uv
 
 # HUMIDITY
 def get_current_humidity_value():
@@ -114,10 +116,12 @@ while client.loop() == 0:
     light_value = get_current_light_value()
     temperature_value = get_current_temperature_value()
     humid_value = get_current_humidity_value()
+    uv_value = get_current_uv_value()
     msg = json.dumps({"device": "business2", \
                       "light_value" :  light_value, \
                       "temperature_value": temperature_value, \
-                      "humid_value": humid_value})
+                      "humid_value": humid_value, \
+                      "uv_value": uv_value})
     client.publish("iot-2/evt/eid/fmt/json", msg, 2, True)
     print("sent: " + msg)
     time.sleep(3.0)
