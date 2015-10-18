@@ -13,6 +13,12 @@
 
 # リモート栽培キット
 
+![スライド1](./keynote/slide1.png)
+![スライド2](./keynote/slide2.png)
+![スライド3](./keynote/slide3.png)
+
+# リモート栽培キット
+
 ## 背景と課題
 
 ### 課題
