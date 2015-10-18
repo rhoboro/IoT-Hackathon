@@ -124,5 +124,5 @@ while client.loop() == 0:
                       "uv_value": uv_value})
     client.publish("iot-2/evt/eid/fmt/json", msg, 2, True)
     print("sent: " + msg)
-    time.sleep(3.0)
+    time.sleep(1.0)
 

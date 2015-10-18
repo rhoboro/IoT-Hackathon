@@ -51,7 +51,7 @@ client.connect(endpoint, 1883)
 while client.loop() == 0:
     light_value = get_current_light_value()
     msg = json.dumps({"device": "business1", "light_value" :  light_value});
-    client.publish("iot-2/evt/eid/fmt/json", msg, 0, True)
+    client.publish("iot-2/evt/eid/fmt/json", msg, 2, True)
     print("sent: " + msg)
-    time.sleep(1.5)
+    time.sleep(1.0)
 
