@@ -1,3 +1,16 @@
+# Intel IoT Roadshow
+
+## プロジェクト構成
+
+* local.py
+  - Edison1で起動
+* remote.py
+  - Edison2で起動
+* app.py
+  - Edison1, 2から情報を取得し、Edison2のLEDを制御する
+* MQTTブローカー
+  - IBM Bluemixで作成
+
 # リモート栽培キット
 
 ## 背景と課題
