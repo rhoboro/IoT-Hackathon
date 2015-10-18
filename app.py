@@ -20,6 +20,7 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     payload = json.loads(msg.payload.decode())
+    print "Get " + str(payload)
     if "light_value" in payload:
         calc_light(payload)
     if "temperature_value" in payload:
@@ -28,7 +29,6 @@ def on_message(client, userdata, msg):
 def calc_light(payload):
     global device1_light
     global device2_light
-    print "Get value: " + str(payload["light_value"]) + " from " + str(payload["device"])
     if "device" in payload:
         if payload["device"] == "business1":
             device1_light = payload["light_value"]

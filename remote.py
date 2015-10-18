@@ -4,6 +4,7 @@ import paho.mqtt.client as mqtt
 import json
 import time
 import mraa
+import math
 
 LIGHT_UP = 1
 LIGHT_DOWN = 2
@@ -13,6 +14,7 @@ TYPE_ID = "business2"
 DEVICE_ID = "784b87a1a270"
 PASSWORD = "(OGrv4T)S!Nv85QRsc"
 THRESHOLD = 400
+B = 3975 # B value of the thermistor
 
 light = mraa.Aio(0)
 led1 = mraa.Gpio(2)
@@ -30,6 +32,10 @@ led5.dir(mraa.DIR_OUT)
 led6.dir(mraa.DIR_OUT)
 
 leds = [led1, led2, led3, led4, led5, led6]
+
+temperaturein = mraa.Aio(1)
+uvin = mraa.Aio(2)
+humidin = mraa.Aio(3)
 
 def on_connect(client, userdata, flags, rc):
     client.subscribe("iot-2/cmd/cid/fmt/json", 2)
@@ -75,10 +81,22 @@ def set_led_lights(cmd):
 
 # TEMPERATURE
 def get_current_temperature_value():
-    None
+    raw_temperature = temperaturein.read()
+    resistance = (1023-raw_temperature)*10000.0/raw_temperature    
+    temperature = 1/(math.log(resistance/10000.0)/B+1/298.15)-273.15
+    return int(temperature)
 
 def set_temperature(temperature):
     None
+
+# UV
+def get_current_uv_value():
+    pass
+
+# HUMIDITY
+def get_current_humidity_value():
+    humid = humidin.read()
+    return humid
 
 client_id = "d:" + ORG_ID + ":" + TYPE_ID + ":" + DEVICE_ID
 endpoint = ORG_ID + ".messaging.internetofthings.ibmcloud.com"
@@ -94,7 +112,12 @@ for led in leds:
 value = 0
 while client.loop() == 0:
     light_value = get_current_light_value()
-    msg = json.dumps({"device": "business2", "light_value" :  light_value});
+    temperature_value = get_current_temperature_value()
+    humid_value = get_current_humidity_value()
+    msg = json.dumps({"device": "business2", \
+                      "light_value" :  light_value, \
+                      "temperature_value": temperature_value, \
+                      "humid_value": humid_value})
     client.publish("iot-2/evt/eid/fmt/json", msg, 2, True)
     print("sent: " + msg)
     time.sleep(3.0)
