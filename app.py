@@ -53,6 +53,7 @@ def calc_temperature(payload):
 def send_message(message):
     dic = {"message": message}
     client.publish("iot-2/type/" + DEVICE_TYPE_1  + "/id/" + DEVICE_ID_1 + "/cmd/cid/fmt/json", json.dumps(dic), 2, True)
+    print "Sent " + json.dumps(dic)
 
 device1_light = 770
 device2_light = 770
