@@ -30,6 +30,7 @@ def set_message(msg):
     # msgを表示する
     None
 
+client_id = "d:" + ORG_ID + ":" + TYPE_ID + ":" + DEVICE_ID
 endpoint = ORG_ID + ".messaging.internetofthings.ibmcloud.com"
 client = mqtt.Client(client_id)
 client.username_pw_set("use-token-auth", PASSWORD)

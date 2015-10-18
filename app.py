@@ -44,6 +44,8 @@ def calc_light(payload):
             print "Sent " + json.dumps(dic) 
     if device1_light < 100:
         send_message("Please turn on the LED.")
+    else:
+        send_message("")
  
 def calc_temperature(payload):
     None
